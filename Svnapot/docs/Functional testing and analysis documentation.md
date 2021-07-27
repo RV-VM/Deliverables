@@ -2,7 +2,9 @@
 
 ## 1.Test framework 
 
-Our test framework contains a simulator with correct behavior: NEMU, the processor core to be tested: NutShell, the simulated peripheral devices: SDRAM, UART, etc. After NutShell executes an instruction, NutShell will wake up NEMU to execute an instruction, and compare the states of the two, if they are the same then go ahead to execute instructions , otherwise there is an error which will terminate the process, and the error field will be printed. The schematic diagram is as follows:
+Our test framework contains a simulator with correct behavior: NEMU, the processor core to be tested: NutShell, the simulated peripheral devices: SDRAM, UART, etc. 
+
+After NutShell executes an instruction, it will wake up NEMU to execute an instruction, and compare the states of the two, if they are the same then go ahead to execute instructions , otherwise there is an error which will terminate the process, and the error field will be printed. The schematic diagram is as follows:
 
 ![image](../imgs/image.png)
 
@@ -11,7 +13,7 @@ Our test framework contains a simulator with correct behavior: NEMU, the process
 ## 2.Method
 
 - Before starting the test, an initial level 3 page table of Sv39 (this page table translates the virtual address to the same physical address) is populated into the simulated RAM interacting with NutShell.
-- Hard-coding set the initial position of the SATP register to point to the page table, and modify the condition for the start of address conversion, so that it can be turned on when it is in M mode. After that, NutShell can directly perform address translation and access the page table when accessing the memory, without requiring the test program to maintain an additional page table, which reduces the difficulty of testing.As long as the test program can be run correctly, the behavior of the MMU is correct.
+- Hard-coding set the initial position of the SATP register to point to the page table, and modify the condition for the start of address conversion, so that it can be turned on when it is in M mode. After that, NutShell can directly perform address translation and access the page table when accessing the memory, without requiring the test program to maintain an additional page table, which reduces the difficulty of testing. As long as the test program can be run correctly, the behavior of the MMU is correct.
 - In order to add support for the Svnapot extension test, we need to make some modifications to the initial populated page table, change the N bits of the page table entry to 1, and change the PPN\[0][3:0] to 1000, so that all the leaf node page table entries are the page table entries of the Svnapot extension. `src/test/csrc/ram.cpp` is the directory in which this emulated RAM file resides.
 
 First add a parameter to the addPageSv39 function to choose whether or not to use the Svnapot extended PTE
@@ -88,7 +90,7 @@ Svnapot enabled：
 
 ## 4.Analysis
 
-- In terms of function, Coremark Dhrystone and Microbench can run to the end correctly, indicating the correctness of function implementation.
+- In terms of function, Coremark Dhrystone Microbench and riscv-tests can run to the end correctly, indicating the correctness of function implementation.
 
 
 

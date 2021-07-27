@@ -3,7 +3,7 @@
 ## 1.Theoretical analysis 
 
 There are many ways to implement the Svnapot extension on NutShell, but in the end we use one that has the least amount of code change and the least impact on timing and area.
-In terms of timing, the operation of checking whether PTE is Svnapot PTE is added at the last level of PTW. This operation is to take out the N bit of PTE and compare the PPN\[0][3:0] bit of PTE to get a signal. If it is Svnapot PTE, use a new mask.These operations will increase the number of logical layers to obtain the mask, and this increase in selection logic may affect the timing.
+In terms of timing, the operation of checking whether PTE is Svnapot PTE is added at the last level of PTW. This operation is to take out the N bit of PTE and compare the PPN\[0][3:0] bit of PTE to get a signal. If it is Svnapot PTE, use a new mask. These operations will increase the number of logical layers to obtain the mask, and this increase in selection logic may affect the timing.
 
 ```scala
 if(napot_on)
@@ -27,7 +27,7 @@ In terms of power consumption, there should be an increase, because there is som
 ## 2.DC results
 Comparison: Sv39 paging versus Sv39 paging with the Svnapot extension.
 ### 2.1 timing
-In both ITLB and DTLB, the critical path is to determine the TLB hit and take out the hit item for subsequent operation.This is due to the design of NutShell itself. After the extension of Svnapot, the timing of ITLB and DTLB is basically not affected. The A/D bit write back and mask selection that may affect the timing are not located in the critical path.Overall, the difference in timing is only 1 percent, which is negligible.
+In both ITLB and DTLB, the critical path is to determine the TLB hit and take out the hit item for subsequent operation. This is due to the design of NutShell itself. After the extension of Svnapot, the timing of ITLB and DTLB is basically not affected. The A/D bit write back and mask selection that may affect the timing are not located in the critical path. Overall, the difference in timing is only 1 percent, which is negligible.
 ### 2.2 area
 As expected, the total area increased due to the judgment that more connections were needed, but the change was small. The number of sequential logic units of ITLB and DTLB increased by one after adding the extension of Svnapot. The number of combined logic units increased by a large amount and the total area increased by 0.8 percent.
 ### 2.3 power
@@ -52,7 +52,7 @@ Specifically, after entering SATP, each TLB table item is judged to be hit in pa
 - Critical path length increased from 0.40 to 0.42
 
 The critical path is u_T_19_addr_reg_52_ to tlbExec/clk_gate_state_reg/latch, and finally to the clock gate of the state register, which is used to generate the clock of the state register for low power processing.
-This path determines the hit between the virtual address (REG) input to the TLB to be converted and each entry of the TLB. It takes out the hit item, checks the A/D bit, and changes the state of the PTW if the A/D bit is not set to read or write.The critical path is the same without Svnapot.
+This path determines the hit between the virtual address (REG) input to the TLB to be converted and each entry of the TLB. It takes out the hit item, checks the A/D bit, and changes the state of the PTW if the A/D bit is not set to read or write. The critical path is the same without Svnapot.
 <img src="../imgs/reg-reg.png" alt="reg-reg"  />
 **in-reg path group**
 
@@ -60,7 +60,7 @@ This path determines the hit between the virtual address (REG) input to the TLB 
 - The critical path length remains the same and is 0.34
 
 The critical path becomes CSRSATP[46] to tlbExec/clk_gate_state_reg/latch, and finally to the clock gate of the state register, which is used to generate the clock of the state register for low power processing.
-This path is similar to the Reg-Reg critical path, except that the input signal changes from the register to the IO port. Input the value of SATP to get the ASID bits and compare it with the ASID of each item in TLB to get the hit signal. Take out the hit item and check the A/D bit.If A write/read A/D bit is not set to A pair, the PTW state needs to be changed.The critical path is the same without NAPOT
+This path is similar to the Reg-Reg critical path, except that the input signal changes from the register to the IO port. Input the value of SATP to get the ASID bits and compare it with the ASID of each item in TLB to get the hit signal. Take out the hit item and check the A/D bit. If A write/read A/D bit is not set to A pair, the PTW state needs to be changed. The critical path is the same without NAPOT
 ![in-reg](../imgs/in-reg.png)
 **reg-out path group**
 
@@ -86,7 +86,7 @@ Now the critical path: the virtual address in the address register to determine 
 ### 4.2. ITLB analysis report
 **Comparison object: Sv39 and Sv39 + Svnapot**
 
-> The ITLB is special in that it is read-only and does not write, so there is no writing back to  the D bit.Since the PTW of NutShell directly places the A bit when backfilling the PTE to TLB after miss, the A bit in the TLB entry of NutShell is always 1, and there is no writing back to the A bit.So there is no writing back to A/D bits, but NutShell's ITLB and DTLB are instantiated with A single class, and ITLB still allows for writing back to A/D bits.
+> The ITLB is special in that it is read-only and does not write, so there is no writing back to  the D bit. Since the PTW of NutShell directly places the A bit when backfilling the PTE to TLB after miss, the A bit in the TLB entry of NutShell is always 1, and there is no writing back to the A bit. So there is no writing back to A/D bits, but NutShell's ITLB and DTLB are instantiated with A single class, and ITLB still allows for writing back to A/D bits.
 
 #### 4.2.1 timing
 **in-out path group**
@@ -125,5 +125,3 @@ New critical path: Virtual address in address register: determine TLB hit and pe
 - The addition of Svnapot increases power consumption slightly
    - Dynamic power consumption increased from 8.9092 mW to 8.9901 mW
    - The static power consumption is increased from 59.1291 UW to 60.8419 UW
-### 4.3 details
-Detailed documentation is available at [here](https://github.com/RV-VM/DC-Svnapot)
