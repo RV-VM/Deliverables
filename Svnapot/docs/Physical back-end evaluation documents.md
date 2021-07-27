@@ -67,7 +67,7 @@ This path is similar to the Reg-Reg critical path, except that the input signal 
 - The critical path has changed, but the total length remains the same. Instead of u_T_18_addr_reg to io_mem_req_bits_wdata, it is now u_T_18_addr_reg to io_mem_req_bits_addr
 
 The original critical path: the virtual address in the address register for TLB hit judgment, according to the item of hit take out A/D bit to determine whether to write back, according to the signal to select the content of write back
-![image (2)](../imgs/image (2).png)
+![image (2)](../imgs/image_2.png)
 Now the critical path: the virtual address in the address register to determine the TLB hit, according to the hit item to take out the A/D bit to determine whether the need to write back, according to the signal to select the write back address
 ![reg-out](../imgs/reg-out.png)
 

@@ -6,7 +6,7 @@ Our test framework contains a simulator with correct behavior: NEMU, the process
 
 ![image](../imgs/image.png)
 
-![image (1)](../imgs/image (1).png)
+![image (1)](../imgs/image_1.png)
 
 ## 2.Method
 
