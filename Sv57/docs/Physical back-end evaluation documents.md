@@ -41,7 +41,7 @@ Compare the results in EmbeddedTLB.qor.inc_2nd.tt_v0p8_85c.rpt
 
 The increase in critical paths occurs on the path of MDTLB to REG and MDTLB to IN, from 0.14 to 0.18. Because SV39's PTW process is access to a three-level page table, and the SV57's PTW process is access to a five-level page table. Therefore, the  critical path will become a 5/3-fold.
 
-<img src="../imgs/sv57.PNG" alt="sv3957" style="zoom:80%;" />
+<img src="../imgs/sv57.PNG" alt="sv3957" style="zoom:75%;" />
 
 In the corresponding code, the LEVEL value of the PTW is modified from 3 to 5, so the proportion of the longest path is 3: 5.
 
