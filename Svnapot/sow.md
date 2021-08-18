@@ -28,17 +28,13 @@ Implement the Svnapot extension on NutShell to verify the physical implementabil
 
 According to the specification : https://github.com/riscv/virtual-memory/blob/main/specs/628-Svnapot.pdf
 
-
 **Deliverables (bullet list of components and the changes expected):**
 
-
-
-1. Design and implementation documentation (which describes our design in detail and includes a link to our repository)
-2. Functional testing and Analysis documentation (detailing our testing methods and final test results)
-3. Physical back-end report (describes the physical implementation overhead of the extension)
-4. Problem summary document (catalogs some typical implementation issues and points out some common issues to be aware of when implementing extensions)
-
-
+1. The final code : https://github.com/RV-VM/NutShell/tree/svnapot
+2. Design and implementation documentation (which describes our design in detail and includes a link to our repository)
+3. Functional testing and Analysis documentation (detailing our testing methods and final test results)
+4. Physical back-end report (describes the physical implementation overhead of the extension)
+5. Problem summary document (catalogs some typical implementation issues and points out some common issues to be aware of when implementing extensions)
 
 **Acceptance criteria (bullet list with measurable results defined):**
 
@@ -46,7 +42,6 @@ NutShell passed CoreMark Dhrystone Microbench and Linux kernel(booting) with Svn
 
 
 **Projected timeframe (best guess):**
-
 
 5 months
 
