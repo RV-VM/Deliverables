@@ -1,16 +1,23 @@
 # Svnapot
 
 Task group name: Virtual Memory
+
 Extension or extension group name: Svnapot
+
 Component names: Svnapot
+
 Group contributor name: CAS
+
 Task group liaison email: dlustig@nvidia.com (Dan Lustig)
+
 Development partner: liaison 
 
-email: xuyinan@ict.ac.cn (Yinan Xu)
+email: xuyinan@ict.ac.cn (Yinan Xu)  lixin212@mails.ucas.ac.cn(Xin Li)
 
 Creation date: 2021-07-07
+
 Last Modified Date: 2021-08-18
+
 Version: 0.1
 
 
