@@ -136,4 +136,28 @@ val vmEnable = satp.asTypeOf(satpBundle).mode === 10.U
 
 ## 3. Results
 
+### 3.1 cputest
+
+<img src="../imgs/cputest.PNG" alt="cputest" style="zoom:88%;" />
+
+### 3.2 microbench
+
+<img src="../imgs/m1.PNG" alt="m1" style="zoom:60%;" />
+
+<img src="../imgs/m2.PNG" alt="m2" style="zoom:80%;" />
+
+### 3.3 coremark
+
+<img src="../imgs/c1.PNG" alt="c1" style="zoom:70%;" />
+
+<img src="../imgs/c2.PNG" alt="c2" style="zoom:60%;" />
+
+### 3.4 dhrystone
+
+<img src="../imgs/d1.PNG" alt="d1" style="zoom:70%;" />
+
+<img src="../imgs/d2.PNG" alt="d2" style="zoom:64%;" />
+
+## 4. Result analysis
+
 Microbench, coremark, dhrystone and cputest tests can run correctly, indicating the correctness of the functionality.
