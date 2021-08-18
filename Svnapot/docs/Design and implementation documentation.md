@@ -2,8 +2,8 @@
 
 ## 1.Design thought
 - The Svnapot extension is essentially a base page that supports multiple sizes, this time a base page of 64KB is implemented on the NutShell as described in the manual.
-- To implement this extension, we first need to modify the PTE encoding format to add N bits to the high bits.In the PTW logic, Walk to the last level and add additional logic to determine whether the PTE node is a Svnapot compliant node.And when you put it in the TLB, you need to specify whether this is a special 64KB PTE node.
-- NutShell's ITLB and DTLB are fully connected structures. In order to minimize code modification, it was decided not to add new flag bits to the TLB entries, but to use a new mask to do this.The original TLB mask has three conditions, one is 0x00000 for 1GB, one is 0x3fe00 for 2MB, and the other is 0x3ffff for 4KB. For the Svnapot extension of 64KB base page implemented this time, we only need to add a mask of 0x3fff0.
+- To implement this extension, we first need to modify the PTE encoding format to add N bits to the high bits. In the PTW logic, Walk to the last level and add additional logic to determine whether the PTE node is a Svnapot compliant node. And when we put it in the TLB, we need to specify whether this is a special 64KB PTE node or not.
+- NutShell's ITLB and DTLB are fully connected structures. In order to minimize code modification, it was decided not to add new flag bits to the TLB entries, but to use a new mask to do this. The original TLB mask has three conditions, one is 0x00000 for 1GB, one is 0x3fe00 for 2MB, and the other is 0x3ffff for 4KB. For the Svnapot extension of 64KB base page implemented this time, we only need to add a mask of 0x3fff0.
 - When the PTW Walk to the last level checks that the PTE node is a special 64KB PTE node, set it's mask to 0x3fff0 and put it into the TLB to achieve the effect of the special identification, and all the other logic of the TLB hit call does not require additional modification.
 ## 2.Specific code implementation
 To achieve configurability, first add an entry in the configuration item whether the Svnapot extension is enabled or not
@@ -84,7 +84,7 @@ if(napot_on)
 else
 	missMask := Mux(level===3.U, 0.U(maskLen.W), Mux(level===2.U, "h3fe00".U(maskLen.W), "h3ffff".U(maskLen.W)))
 ```
-In the case of write back to A/D bit, it is necessary to distinguish whether the PTE in TLB is the PTE of Svnapot extension, and use the mask to distinguish, if so, it is necessary to maintain the N bit when write back.
+In the case of writing back to A/D bit, it is necessary to distinguish whether the PTE in TLB is the PTE of Svnapot extension, and use the mask to distinguish, if so, it is necessary to maintain the N bit when write back.
 ```scala
   //!!! PPN needs to be 44 bit-width 
   val hitPTEStore = RegEnable(Cat(0.U(10.W) , 0.U( (44 - hitData.ppn.getWidth).W ) , hitData.ppn, 0.U(2.W), hitRefillFlag), hitWB)
